@@ -1,0 +1,34 @@
+name: Initialize Mibang Cloud Database
+
+on:
+  push:
+    paths:
+      - 'db-init.flag'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  initialize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Initialize database
+        run: |
+          curl --fail --show-error --silent \
+            -X POST 'https://mantledb.sh/v2/peterslab-mibang-89b8f9bc/campaign-state' \
+            -H 'Content-Type: application/json' \
+            --data-binary @defaults.json
+      - name: Verify database
+        run: |
+          curl --fail --show-error --silent \
+            'https://mantledb.sh/v2/peterslab-mibang-89b8f9bc/campaign-state' \
+            -o /tmp/state.json
+          python - <<'PY'
+          import json
+          data=json.load(open('/tmp/state.json'))
+          assert data.get('version') == 2
+          assert len(data.get('plans', [])) == 18
+          print('Database initialized and verified')
+          PY
