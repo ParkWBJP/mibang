@@ -4,9 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Mibang · Poodle Campaign</title>
-<style>
-:root{--g:#315f49;--g2:#254838;--bg:#f5f1e8;--p:#fffdf8;--l:#d9d1c3;--t:#22332b;--m:#6f7b74;--warn:#fff2d7;--ok:#e4eee8;--red:#a94343}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR","Noto Sans JP",sans-serif}.wrap{max-width:1240px;margin:auto;padding:18px}.top,.row,.tabs,.actions{display:flex;gap:10px;align-items:center}.top{justify-content:space-between}.hero{margin-top:14px;padding:25px;border-radius:22px;background:var(--g);color:#fff}.hero h1{margin:7px 0;font-size:29px}.stats,.grid{display:grid;gap:11px}.stats{grid-template-columns:repeat(4,1fr);margin-top:17px}.grid{grid-template-columns:repeat(3,1fr)}.stat,.card{background:var(--p);border:1px solid var(--l);border-radius:15px;padding:15px}.hero .stat{background:#ffffff15;border-color:#ffffff25}.stat b{display:block;font-size:21px}.tabs{margin:15px 0;overflow:auto}.tabs button,.btn{border:0;border-radius:10px;padding:10px 13px;font-weight:700;cursor:pointer}.tabs button{background:var(--p);border:1px solid var(--l);white-space:nowrap}.tabs button.on,.btn{background:var(--g);color:#fff}.btn:hover{background:var(--g2)}.btn.alt{background:#e9e2d5;color:var(--g)}.btn.danger{background:var(--red)}.tab{display:none}.tab.on{display:block}.calendar{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}.day{background:var(--p);border:1px solid var(--l);border-radius:12px;padding:10px;min-height:112px;cursor:pointer}.day.on{outline:3px solid #315f4935}.day small,.muted{color:var(--m);font-size:12px}.checks label{display:block;background:#fff;border:1px solid var(--l);border-radius:9px;padding:10px;margin:7px 0}.checks input{margin-right:8px}.input,select,textarea{width:100%;padding:9px;border:1px solid var(--l);border-radius:9px;background:white}.form{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.full{grid-column:1/-1}table{width:100%;border-collapse:collapse;min-width:960px}th,td{padding:8px;border-bottom:1px solid var(--l);font-size:12px;text-align:left;vertical-align:top}th{background:#ebe4d8}.scroll{overflow:auto}.sync{margin-top:10px;padding:12px;background:var(--warn);border-radius:10px}.sync.ok{background:var(--ok)}.mini-sync{margin-top:10px;padding:9px 11px;border-radius:9px;background:#f3eee4;color:var(--m);font-size:12px}.lang button{padding:7px 10px;border:1px solid var(--l);background:white}.lang button.on{background:var(--g);color:white}.pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#e4eee8;font-size:11px}.sheet-link{display:inline-block;margin-top:8px;color:var(--g);font-weight:700}.right{margin-left:auto}.content-card h3{margin:4px 0 8px}.content-card p{margin:5px 0}.empty{padding:25px;text-align:center;color:var(--m)}@media(max-width:850px){.stats,.grid{grid-template-columns:1fr 1fr}.calendar{grid-template-columns:repeat(3,1fr)}.form{grid-template-columns:1fr}.full{grid-column:auto}}@media(max-width:560px){.stats,.grid{grid-template-columns:1fr}.calendar{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:23px}.top{align-items:flex-start}.actions{flex-wrap:wrap}}
-</style>
+<link rel="stylesheet" href="styles-v2.css">
 </head>
 <body>
 <div class="wrap">
@@ -15,7 +13,7 @@
     <div class="lang"><button id="ko" class="on">한국어</button><button id="ja">日本語</button></div>
   </div>
   <section class="hero">
-    <small data-i="owner">담당자 · Mibang</small>
+    <div class="row"><small data-i="owner">담당자 · Mibang</small><span class="right cloud-badge"><span id="heroDot" class="status-dot"></span><span id="heroStatus">연결 중</span></span></div>
     <h1 data-i="title">푸들 캠페인 일일 운영 대시보드</h1>
     <div data-i="desc">7월 29일 티저부터 8월 15일 접수 마감까지 Mibang 업무만 관리합니다.</div>
     <div class="stats">
@@ -30,115 +28,27 @@
     <button data-tab="cal" data-i="calendar">캘린더</button>
     <button data-tab="contents" data-i="content">콘텐츠 기획</button>
     <button data-tab="dm" data-i="dmlist">DM 리스트</button>
-    <button data-tab="setting" data-i="setting">연동 설정</button>
+    <button data-tab="data" data-i="data">데이터 관리</button>
   </nav>
   <main>
     <section id="today" class="tab on">
       <div class="grid">
-        <div class="card"><h3 id="todayTitle"></h3><div id="checks" class="checks"></div><div id="taskSync" class="mini-sync"></div></div>
-        <div class="card">
-          <h3 data-i="routine">일일 루틴</h3>
-          <p>11:00–11:30 <span data-i="r1">문의·신청 확인</span></p>
-          <p>11:30–12:40 <span data-i="r2">푸들 보호자 탐색</span></p>
-          <p>12:40–14:00 <span data-i="r3">DM 30명 분산 발송</span></p>
-          <p>14:00–15:10 <span data-i="r4">콘텐츠 제작·게시</span></p>
-          <p>15:10–15:45 <span data-i="r5">답장·댓글 대응</span></p>
-          <p>15:45–16:00 <span data-i="r6">일일 마감 기록</span></p>
-        </div>
-        <div class="card"><h3 data-i="todayplan">선택일 콘텐츠</h3><div id="plan"></div></div>
+        <div class="card"><div class="row today-head"><h3 id="todayTitle"></h3><button id="editToday" class="btn alt small" data-i="edit">수정</button></div><div id="checks" class="checks"></div><div id="taskSync" class="mini-sync"></div></div>
+        <div class="card"><h3 data-i="routine">일일 루틴</h3><p>11:00–11:30 <span data-i="r1">문의·신청 확인</span></p><p>11:30–12:40 <span data-i="r2">푸들 보호자 탐색</span></p><p>12:40–14:00 <span data-i="r3">DM 30명 분산 발송</span></p><p>14:00–15:10 <span data-i="r4">콘텐츠 제작·게시</span></p><p>15:10–15:45 <span data-i="r5">답장·댓글 대응</span></p><p>15:45–16:00 <span data-i="r6">일일 마감 기록</span></p></div>
+        <div class="card"><h3 data-i="todayplan">선택일 콘텐츠</h3><div id="plan" class="today-plan"></div><button id="finishDay" class="btn full" style="margin-top:14px" data-i="finish">오늘 업무 마감 저장</button></div>
       </div>
     </section>
-    <section id="cal" class="tab"><div id="calendarGrid" class="calendar"></div></section>
-    <section id="contents" class="tab"><div id="contentGrid" class="grid"></div></section>
+    <section id="cal" class="tab"><div class="inline-note" data-i="calHelp">날짜별 할 일을 수정하면 오늘의 업무에도 반영됩니다.</div><div id="calendarGrid" class="calendar" style="margin-top:12px"></div></section>
+    <section id="contents" class="tab"><div class="inline-note" data-i="contentHelp">제목과 기획 내용을 수정하고 저장할 수 있습니다.</div><div id="contentGrid" class="grid" style="margin-top:12px"></div></section>
     <section id="dm" class="tab">
       <div class="grid">
-        <div class="card">
-          <h3 data-i="add">DM 후보 추가</h3>
-          <form id="dmForm" class="form">
-            <input id="account" class="input" required placeholder="@account">
-            <input id="dog" class="input" data-ph="dog" placeholder="푸들 이름">
-            <input id="url" class="input full" placeholder="Instagram URL">
-            <input id="residence" class="input full" data-ph="residence" placeholder="일본 거주 확인 근거">
-            <input id="found" type="date" class="input">
-            <input id="sent" type="date" class="input">
-            <select id="status"></select>
-            <input id="follow" type="date" class="input">
-            <textarea id="note" class="full" rows="3" data-ph="memo" placeholder="메모"></textarea>
-            <button id="dmSave" class="btn full" data-i="save">저장·Google Sheets 반영</button>
-          </form>
-          <div id="dmSync" class="mini-sync" data-i="autosaveHelp">저장하면 Google Sheets에 자동 반영됩니다.</div>
-        </div>
-        <div class="card" style="grid-column:span 2">
-          <div class="row"><h3 data-i="dmlist">DM 리스트</h3><b class="right"><span id="sentToday">0</span>/30</b></div>
-          <div class="scroll"><table><thead><tr><th>Account</th><th>Poodle</th><th>Japan</th><th>DM</th><th>Status</th><th>Memo</th><th></th></tr></thead><tbody id="dmBody"></tbody></table></div>
-        </div>
+        <div class="card"><h3 data-i="add">DM 후보 추가</h3><form id="dmForm" class="form"><input id="account" class="input" required placeholder="@account"><input id="dog" class="input" data-ph="dog" placeholder="푸들 이름"><input id="url" class="input full" placeholder="Instagram URL"><input id="residence" class="input full" data-ph="residence" placeholder="일본 거주 확인 근거"><input id="found" type="date" class="input"><input id="sent" type="date" class="input"><select id="status"></select><input id="follow" type="date" class="input"><textarea id="note" class="full" rows="3" data-ph="memo" placeholder="메모"></textarea><button id="dmSave" class="btn full" data-i="save">저장</button></form><div id="dmSync" class="mini-sync"></div></div>
+        <div class="card" style="grid-column:span 2"><div class="row"><h3 data-i="dmlist">DM 리스트</h3><b class="right"><span id="sentToday">0</span>/30</b></div><div class="scroll"><table><thead><tr><th>Account</th><th>Poodle</th><th>Japan</th><th>DM</th><th>Status</th><th>Memo</th><th></th></tr></thead><tbody id="dmBody"></tbody></table></div></div>
       </div>
     </section>
-    <section id="setting" class="tab">
-      <div class="card">
-        <h3 data-i="setting">연동 설정</h3>
-        <label>Google Sheets URL<input id="sheetUrl" class="input"></label><br>
-        <label>Apps Script Web App URL<input id="scriptUrl" class="input" placeholder="https://script.google.com/macros/s/.../exec"></label>
-        <div class="actions" style="margin-top:12px">
-          <button id="saveSetting" class="btn alt" data-i="savesetting">연동정보 저장</button>
-          <button id="openSheet" class="btn alt" data-i="opensheet">시트 열기</button>
-          <button id="finish" class="btn" data-i="finish">일일 마감 기록 저장</button>
-        </div>
-        <div id="sync" class="sync" data-i="notsync">아직 동기화되지 않았습니다.</div>
-        <a id="sheetLink" class="sheet-link" target="_blank" rel="noopener" data-i="opensheet">시트 열기</a>
-        <p class="muted" data-i="setup">최초 1회 연동 설정 후 DM 저장과 업무 체크가 자동 반영됩니다.</p>
-      </div>
-    </section>
+    <section id="data" class="tab"><div class="card data-card"><h3 data-i="data">데이터 관리</h3><div class="data-line"><b data-i="cloudStatus">클라우드 상태</b><div id="cloudStatusText" class="muted"></div></div><div class="data-line"><b data-i="lastSaved">마지막 저장</b><div id="lastSavedText" class="muted">-</div></div><div class="data-line"><b data-i="recordCount">저장 데이터</b><div id="recordCountText" class="muted"></div></div><div class="actions" style="margin-top:16px"><button id="reloadCloud" class="btn alt" data-i="reload">클라우드 새로고침</button><button id="exportData" class="btn alt" data-i="export">백업 다운로드</button><label class="btn alt" style="cursor:pointer"><span data-i="import">백업 불러오기</span><input id="importData" type="file" accept="application/json" class="hidden"></label></div><div id="dataMsg" class="sync"></div></div></section>
   </main>
 </div>
-<script>
-const DEFAULT_SHEET='https://docs.google.com/spreadsheets/d/1kuzNyMSObduViqgl0uVYcKg5cJs7in1RR1budvcXj84/edit';
-const I={
-ko:{sub:'푸들 건강검진 캠페인 운영',owner:'담당자 · Mibang',title:'푸들 캠페인 일일 운영 대시보드',desc:'7월 29일 티저부터 8월 15일 접수 마감까지 Mibang 업무만 관리합니다.',hours:'근무시간',period:'접수기간',post:'일일 콘텐츠',dmgoal:'일일 DM',today:'오늘의 업무',calendar:'캘린더',content:'콘텐츠 기획',dmlist:'DM 리스트',setting:'연동 설정',routine:'일일 루틴',r1:'문의·신청 확인',r2:'푸들 보호자 탐색',r3:'DM 30명 분산 발송',r4:'콘텐츠 제작·게시',r5:'답장·댓글 대응',r6:'일일 마감 기록',todayplan:'선택일 콘텐츠',add:'DM 후보 추가',dog:'푸들 이름',residence:'일본 거주 확인 근거',memo:'메모',save:'저장·Google Sheets 반영',savesetting:'연동정보 저장',opensheet:'시트 열기',finish:'일일 마감 기록 저장',notsync:'아직 동기화되지 않았습니다.',setup:'최초 1회 연동 설정 후 DM 저장과 업무 체크가 자동 반영됩니다.',syncing:'Google Sheets로 전송 중입니다.',synced:'Google Sheets에 반영 요청을 완료했습니다.',needurl:'연동 설정에서 Apps Script 웹앱 URL을 먼저 저장하세요.',autosaveHelp:'저장하면 Google Sheets에 자동 반영됩니다.',autosaving:'Google Sheets에 자동 반영 중입니다.',autosaved:'Google Sheets에 자동 반영했습니다.',localOnly:'사이트에는 저장했지만 Sheets 연동 주소가 없습니다.',tasks:['콘텐츠 1개 제작·게시','일본 거주 푸들 보호자 30명 DM','문의·댓글·답장 확인','DM 리스트 상태 업데이트','일일 마감 기록 확인'],statuses:{not_sent:'미발송',sent:'발송 완료',replied:'답장 있음',interested:'관심 있음',link_sent:'링크 전달',applied:'신청 완료',excluded:'대상 제외',declined:'거절'},delete:'삭제'},
-ja:{sub:'プードル健康チェックキャンペーン運営',owner:'担当者 · Mibang',title:'プードルキャンペーン運営ダッシュボード',desc:'7月29日のティザーから8月15日の受付終了まで、Mibangの業務のみを管理します。',hours:'勤務時間',period:'受付期間',post:'デイリー投稿',dmgoal:'1日DM',today:'今日の業務',calendar:'カレンダー',content:'投稿企画',dmlist:'DMリスト',setting:'連携設定',routine:'日次ルーティン',r1:'問い合わせ・申込確認',r2:'プードル飼い主を検索',r3:'DM30件を分散送信',r4:'投稿制作・公開',r5:'返信・コメント対応',r6:'日次締め記録',todayplan:'選択日の投稿企画',add:'DM候補を追加',dog:'プードル名',residence:'日本在住の確認根拠',memo:'メモ',save:'保存・Google Sheets反映',savesetting:'連携情報を保存',opensheet:'シートを開く',finish:'日次締め記録を保存',notsync:'まだ同期されていません。',setup:'初回の連携設定後、DM保存と業務チェックは自動反映されます。',syncing:'Google Sheetsへ送信中です。',synced:'Google Sheetsへの反映リクエストが完了しました。',needurl:'連携設定でApps ScriptウェブアプリURLを保存してください。',autosaveHelp:'保存するとGoogle Sheetsへ自動反映されます。',autosaving:'Google Sheetsへ自動反映中です。',autosaved:'Google Sheetsへ自動反映しました。',localOnly:'サイトには保存しましたが、Sheets連携URLがありません。',tasks:['投稿1件を制作・公開','日本在住のプードル飼い主30名へDM','問い合わせ・コメント・返信確認','DMリストの状態更新','日次締め記録を確認'],statuses:{not_sent:'未送信',sent:'送信済み',replied:'返信あり',interested:'関心あり',link_sent:'リンク送付',applied:'申込完了',excluded:'対象外',declined:'辞退'},delete:'削除'}};
-const plans=[
-['2026-07-29','3日後、プードル限定キャンペーン開始','3일 후, 푸들 한정 캠페인 시작','티저 이미지·캠페인 예고·8/1 접수 시작 안내'],
-['2026-07-30','プードルの健康で気になることは？','푸들 건강에서 가장 걱정되는 것은?','보호자의 고민을 묻는 공감형 게시물'],
-['2026-07-31','明日受付開始｜先着50頭','내일 접수 시작｜선착순 50마리','가격·기간·50마리 한정 재안내'],
-['2026-08-01','受付開始｜6,900円・先着50頭','접수 시작｜6,900엔·선착순 50마리','신청 링크와 핵심 조건을 한 화면에 표시'],
-['2026-08-02','なぜプードル限定？','왜 푸들 대상 캠페인인가','푸들 보호자를 위한 전용 캠페인 배경 설명'],
-['2026-08-03','40種類の疾患リスクを確認','40종 질환 위험도 확인','병원체보다 보호자가 이해하기 쉬운 질환 중심 표현'],
-['2026-08-04','綿棒で口腔内検体を採取','면봉으로 구강 검체 채취','면봉으로 치아와 잇몸 주변 채취 방법'],
-['2026-08-05','採取は約10秒','채취는 약 10초','집에서 짧게 진행할 수 있다는 편의성'],
-['2026-08-06','検査レポートで分かること','검사 리포트에서 확인하는 내용','샘플 리포트와 결과 항목 소개'],
-['2026-08-07','よくある質問①','자주 묻는 질문 ①','가격·신청·대상·배송 관련 질문 정리'],
-['2026-08-08','プードル飼い主の健康の悩み','푸들 보호자의 건강 고민','치아·잇몸·피부·소화기 등 일상 고민 공감'],
-['2026-08-09','申込から結果確認まで','신청부터 결과 확인까지','신청→선정→문진표→배송→검사 흐름'],
-['2026-08-10','キャンペーン価格6,900円','캠페인 가격 6,900엔','정상가 대비 캠페인 혜택과 기간 강조'],
-['2026-08-11','よくある質問②','자주 묻는 질문 ②','실제 DM·댓글에서 반복된 질문 반영'],
-['2026-08-12','受付終了まであと3日','접수 마감 D-3','마감 임박과 신청 링크 강조'],
-['2026-08-13','受付終了まであと2日','접수 마감 D-2','관심자 재방문 유도'],
-['2026-08-14','明日受付終了','내일 접수 마감','마지막 하루 전 조건 재안내'],
-['2026-08-15','本日受付終了','오늘 접수 마감','당일 마감 시간과 신청 링크 반복 노출']];
-let lang=localStorage.getItem('mibang_lang')||'ko';
-let selected=localStorage.getItem('mibang_date')||plans[0][0];
-let dm=JSON.parse(localStorage.getItem('mibang_dm')||'[]');
-let checks=JSON.parse(localStorage.getItem('mibang_checks')||'{}');
-let syncTimer=null;
-const $=id=>document.getElementById(id),todayISO=()=>new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'});
-function save(){localStorage.setItem('mibang_dm',JSON.stringify(dm));localStorage.setItem('mibang_checks',JSON.stringify(checks));}
-function statusOptions(value='not_sent'){return Object.entries(I[lang].statuses).map(([k,v])=>`<option value="${k}" ${k===value?'selected':''}>${v}</option>`).join('')}
-function payloadFor(dailyLog=false){const date=selected;const taskRows=I.ko.tasks.map((ko,i)=>({date,key:`${date}_${i}`,ko,ja:I.ja.tasks[i],completed:!!checks[date]?.[i]}));const summary={dmCandidates:dm.length,dmToday:dm.filter(x=>x.sent===date).length,dmTotal:dm.filter(x=>x.sent).length,replies:dm.filter(x=>['replied','interested','link_sent','applied'].includes(x.status)).length,applications:dm.filter(x=>x.status==='applied').length,contentPosted:!!checks[date]?.[0]};return{syncId:dailyLog?`${date}-daily-${Date.now()}`:`${date}-autosave`,date,completedAt:new Date().toISOString(),owner:'Mibang',mode:dailyLog?'daily':'autosave',dmList:dm,tasks:taskRows,summary}}
-async function syncToSheets({dailyLog=false,target='sync',silent=false}={}){const url=(localStorage.getItem('mibang_script')||$('scriptUrl')?.value||'').trim();const box=$(target);if(!url){if(box)box.textContent=I[lang].localOnly;if(!silent)alert(I[lang].needurl);return false}if(box){box.textContent=dailyLog?I[lang].syncing:I[lang].autosaving;box.classList.remove('ok')}const payload=payloadFor(dailyLog);try{await fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});localStorage.setItem('mibang_last_sync',payload.completedAt);if(box){box.textContent=`${dailyLog?I[lang].synced:I[lang].autosaved} ${new Date().toLocaleString()}`;box.classList.add('ok')}return true}catch(err){if(box)box.textContent='Sync error: '+err.message;return false}}
-function scheduleAutoSync(target='dmSync'){clearTimeout(syncTimer);syncTimer=setTimeout(()=>syncToSheets({dailyLog:false,target,silent:true}),500)}
-function setLang(x){lang=x;localStorage.setItem('mibang_lang',x);$('ko').classList.toggle('on',x==='ko');$('ja').classList.toggle('on',x==='ja');document.querySelectorAll('[data-i]').forEach(e=>{const k=e.dataset.i;if(I[x][k])e.textContent=I[x][k]});document.querySelectorAll('[data-ph]').forEach(e=>e.placeholder=I[x][e.dataset.ph]);$('status').innerHTML=statusOptions();renderAll()}
-function renderTasks(){const p=plans.find(x=>x[0]===selected);$('todayTitle').textContent=selected;$('plan').innerHTML=`<span class="pill">${p?p[1]:''}</span><h3>${p?(lang==='ja'?p[1]:p[2]):''}</h3><p>${p?p[3]:''}</p>`;$('checks').innerHTML=I[lang].tasks.map((t,i)=>`<label><input type="checkbox" data-task="${i}" ${checks[selected]?.[i]?'checked':''}>${t}</label>`).join('');$('checks').querySelectorAll('input').forEach(el=>el.onchange=()=>{checks[selected]=checks[selected]||{};checks[selected][el.dataset.task]=el.checked;save();scheduleAutoSync('taskSync')})}
-function renderCalendar(){$('calendarGrid').innerHTML=plans.map(p=>`<div class="day ${p[0]===selected?'on':''}" data-date="${p[0]}"><b>${p[0].slice(5)}</b><br><small>${lang==='ja'?p[1]:p[2]}</small></div>`).join('');$('calendarGrid').querySelectorAll('.day').forEach(el=>el.onclick=()=>{selected=el.dataset.date;localStorage.setItem('mibang_date',selected);renderTasks();renderCalendar();document.querySelector('[data-tab="today"]').click()})}
-function renderContents(){$('contentGrid').innerHTML=plans.map(p=>`<div class="card content-card"><small>${p[0]}</small><h3>${lang==='ja'?p[1]:p[2]}</h3><p>${p[3]}</p></div>`).join('')}
-function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function renderDM(){const t=todayISO();$('sentToday').textContent=dm.filter(x=>x.sent===t).length;$('dmBody').innerHTML=dm.length?dm.map((x,i)=>`<tr><td><b>${esc(x.account)}</b><br><a href="${esc(x.url)}" target="_blank">${x.url?'open':''}</a></td><td>${esc(x.dog)}</td><td>${esc(x.residence)}</td><td><input class="input dmdate" data-i2="${i}" type="date" value="${esc(x.sent)}"></td><td><select class="dmstatus" data-i2="${i}">${statusOptions(x.status)}</select></td><td>${esc(x.note)}</td><td><button class="btn danger del" data-i2="${i}">${I[lang].delete}</button></td></tr>`).join(''):`<tr><td colspan="7" class="empty">No data</td></tr>`;document.querySelectorAll('.dmdate').forEach(e=>e.onchange=()=>{dm[e.dataset.i2].sent=e.value;dm[e.dataset.i2].updatedAt=new Date().toISOString();save();renderDM();scheduleAutoSync('dmSync')});document.querySelectorAll('.dmstatus').forEach(e=>e.onchange=()=>{dm[e.dataset.i2].status=e.value;dm[e.dataset.i2].updatedAt=new Date().toISOString();save();scheduleAutoSync('dmSync')});document.querySelectorAll('.del').forEach(e=>e.onclick=()=>{dm.splice(e.dataset.i2,1);save();renderDM();scheduleAutoSync('dmSync')})}
-function renderAll(){renderTasks();renderCalendar();renderContents();renderDM();const s=localStorage.getItem('mibang_sheet')||DEFAULT_SHEET;$('sheetUrl').value=s;$('sheetLink').href=s;$('scriptUrl').value=localStorage.getItem('mibang_script')||'';$('dmSync').textContent=I[lang].autosaveHelp;$('taskSync').textContent=I[lang].autosaveHelp}
-document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');$(b.dataset.tab).classList.add('on')});
-$('dmForm').onsubmit=async e=>{e.preventDefault();const account=$('account').value.trim();if(dm.some(x=>x.account.toLowerCase()===account.toLowerCase())){alert('Duplicate account');return}dm.push({id:crypto.randomUUID(),account,dog:$('dog').value.trim(),url:$('url').value.trim(),residence:$('residence').value.trim(),found:$('found').value,sent:$('sent').value,status:$('status').value,follow:$('follow').value,note:$('note').value.trim(),updatedAt:new Date().toISOString()});save();e.target.reset();$('status').innerHTML=statusOptions();$('found').value=todayISO();$('sent').value=todayISO();renderDM();await syncToSheets({dailyLog:false,target:'dmSync',silent:false})};
-$('saveSetting').onclick=()=>{localStorage.setItem('mibang_sheet',$('sheetUrl').value.trim());localStorage.setItem('mibang_script',$('scriptUrl').value.trim());renderAll();$('sync').textContent=I[lang].autosaveHelp};
-$('openSheet').onclick=()=>window.open($('sheetUrl').value.trim()||DEFAULT_SHEET,'_blank');
-$('finish').onclick=async()=>{const ok=await syncToSheets({dailyLog:true,target:'sync',silent:false});if(ok){checks[selected]=checks[selected]||{};checks[selected][4]=true;save();renderTasks()}};
-$('ko').onclick=()=>setLang('ko');$('ja').onclick=()=>setLang('ja');$('found').value=todayISO();$('sent').value=todayISO();setLang(lang);
-</script>
-</body>
-</html>
+<div id="editModal" class="modal"><div class="modal-box"><div class="row"><h2 data-i="editPlan">일정·콘텐츠 수정</h2><button id="closeModal" class="btn alt right" data-i="close">닫기</button></div><div class="modal-grid"><label><span data-i="date">날짜</span><input id="editDate" class="input" readonly></label><div></div><label>한국어 제목<input id="editTitleKo" class="input"></label><label>日本語タイトル<input id="editTitleJa" class="input"></label><label>한국어 콘텐츠 기획<textarea id="editDetailKo"></textarea></label><label>日本語コンテンツ企画<textarea id="editDetailJa"></textarea></label><label>한국어 할 일<textarea id="editTasksKo"></textarea></label><label>日本語の業務<textarea id="editTasksJa"></textarea></label></div><div class="actions" style="margin-top:16px"><button id="savePlan" class="btn" data-i="saveChanges">수정내용 저장</button><button id="cancelPlan" class="btn alt" data-i="cancel">취소</button></div><div id="planSaveMsg" class="mini-sync"></div></div></div>
+<script src="app-v2.js"></script>
+</body></html>
