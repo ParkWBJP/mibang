@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   initialize:
@@ -32,3 +32,11 @@ jobs:
           assert len(data.get('plans', [])) == 18
           print('Database initialized and verified')
           PY
+      - name: Record verification status
+        run: |
+          printf '{"ok":true,"verifiedAt":"%s","backend":"MantleDB","plans":18}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > db-status.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add db-status.json
+          git commit -m 'Record cloud database verification' || exit 0
+          git push
